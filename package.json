@@ -1,0 +1,26 @@
+{
+  "name": "ticket-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "dependencies": {
+    "discord-fetch-all": "^1.0.4",
+    "discord.js": "^12.4.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^5.10.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tovade/ticket-bot-aspect.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tovade/ticket-bot-aspect/issues"
+  },
+  "homepage": "https://github.com/tovade/ticket-bot-aspect#readme"
+}

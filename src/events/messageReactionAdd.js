@@ -1,12 +1,11 @@
 const createTicket = require("../util/ticket");
 const { panelModel, guildModel, ticketModel } = require("../data/export");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageAttachment } = require("discord.js");
 const fetchAll = require("discord-fetch-all");
-const PastebinAPI = require("pastebin-js");
+const fs = require("fs");
+const { reactions } = require("discord-fetch-all");
 module.exports = async (client, reaction, user) => {
   const { message } = reaction;
-  let pastebinKey = "UrkthtDVje7qdQBC3XkrGzWKkM7UQPU9";
-  let pastebin = new PastebinAPI(pastebinKey);
   if (user.bot) return;
   if (user.partial) await user.fetch();
   if (reaction.partial) await reaction.fetch();
@@ -23,6 +22,12 @@ module.exports = async (client, reaction, user) => {
   });
 
   if (reaction.message.id === panelDoc.msg) {
+    if (ticketDoc) {
+      reaction.users.remove(user);
+      message.channel.send(`${user} You already have a ticket!`).then((msg) => {
+        msg.delete({ timeout: 3000 });
+      });
+    }
     reaction.users.remove(user);
     createTicket(message, user, guildDoc);
   }
@@ -86,5 +91,26 @@ module.exports = async (client, reaction, user) => {
     message.channel.delete();
     owner.send("Your ticket has been deleted!");
     await ticketDoc.deleteOne();
+  } else if (
+    reaction.message.id === ticketDoc.msg &&
+    reaction.emoji.name == "📰"
+  ) {
+    const msgsArray = await fetchAll.messages(message.channel, {
+      reverseArray: true,
+    });
+    const content = msgsArray.map(
+      (m) =>
+        `${m.author.tag} - ${
+          m.embeds.length ? m.embeds[0].description : m.content
+        }`
+    );
+
+    fs.writeFileSync("transcript.txt", content.join("\n"));
+
+    message.channel
+      .send(new MessageAttachment("transcript.txt", "transcript.txt"))
+      .then(async () => {
+        await fs.unlinkSync("transcript.txt");
+      });
   }
 };

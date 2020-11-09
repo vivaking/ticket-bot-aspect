@@ -1,0 +1,7 @@
+{
+   "token": "Token here!",
+   "prefix": "t!",
+   "statuses": ["tickets", "Spotify", "coltz"],
+   "presences": ["WATCHING", "LISTENING", "LISTENING"],
+   "mongo_uri": "Your mongo uri"
+}
