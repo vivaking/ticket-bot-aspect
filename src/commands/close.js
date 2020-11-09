@@ -29,6 +29,7 @@ module.exports = {
       );
       await msg.react("🔓");
       await msg.react("⛔");
+      await msg.react("📰");
       ticketDoc.msg = msg.id;
       ticketDoc.save();
     } else {

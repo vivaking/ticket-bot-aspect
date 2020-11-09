@@ -18,7 +18,6 @@ module.exports = async (client, reaction, user) => {
   });
   const ticketDoc = await ticketModel.findOne({
     guild: reaction.message.guild.id,
-    owner: user.id,
   });
 
   if (reaction.message.id === panelDoc.msg) {
