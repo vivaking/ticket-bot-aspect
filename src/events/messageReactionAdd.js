@@ -22,12 +22,6 @@ module.exports = async (client, reaction, user) => {
   });
 
   if (reaction.message.id === panelDoc.msg) {
-    if (ticketDoc) {
-      reaction.users.remove(user);
-      message.channel.send(`${user} You already have a ticket!`).then((msg) => {
-        msg.delete({ timeout: 3000 });
-      });
-    }
     reaction.users.remove(user);
     createTicket(message, user, guildDoc);
   }
